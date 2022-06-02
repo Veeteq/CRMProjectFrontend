@@ -1,22 +1,50 @@
-<div class="signin-content">
-  <mat-card>
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <p>Please login to continue</p>
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="User" formControlName="username" required>
-          <mat-error *ngIf="isFieldInvalid('username')">
-            Please inform your user name
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width-input">
-          <input matInput type="password" placeholder="Password" formControlName="password" required autocomplete="off">
-          <mat-error *ngIf="isFieldInvalid('password')">
-            Please inform your password
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="loading">Login</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+      <div fxLayoutAlign="center">
+        <img style="margin-top:30px" src="/assets/img/logo/careydevelopment-logo-sm.png" />
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <h2 style="margin-top:100px" class="my-primary-text">CRM App</h2>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <img src="/assets/img/vector/office-env2.jpg" />
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <a href='https://www.freepik.com/vectors/business'>Business vector created by pikisuperstar - www.freepik.com</a>
+      </div>
+    </div>
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column" class="mat-app-background">
+      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:30px">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h3>Welcome to the CRM App</h3>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h4>Please sign in below</h4>
+        </div>
+        <div class="signin-content">
+          <mat-card>
+            <mat-card-content>
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field class="full-width-input">
+                  <input matInput placeholder="User" formControlName="username" required>
+                  <mat-error *ngIf="isFieldInvalid('username')">Please inform your user name</mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width-input">
+                  <input matInput type="password" placeholder="Password" formControlName="password" required autocomplete="off">
+                  <mat-error *ngIf="isFieldInvalid('password')">Please inform your password</mat-error>
+                </mat-form-field>
+                <div fxLayoutAlign="center" style="margin-top:20px">
+                  <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
+                </div>
+                <mat-spinner [diameter]="50" class="center-div" *ngIf="loading"></mat-spinner>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  </div>
 </div>
