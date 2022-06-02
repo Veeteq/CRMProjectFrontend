@@ -5,10 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
-import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,7 +16,6 @@ import { ErrorInterceptor } from './util/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HeaderComponent
   ],
   imports: [
@@ -27,7 +24,6 @@ import { ErrorInterceptor } from './util/error.interceptor';
     AppRoutingModule,    
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatCardModule,
     MatFormFieldModule,    
     MatInputModule,
     MatToolbarModule
