@@ -1,5 +1,9 @@
 # CRMProjectFrontend
+https://careydevelopment.us/tag/careydevelopmentcrm
+![Carey Development](http://careydevelopment.us/img/branding/careydevelopment-logo-sm.png)
 
+https://www.techiediaries.com/angular-material-navigation-toolbar-sidenav/
+https://www.youtube.com/playlist?list=PLZkSegaxllQRD07HYndLMMvinhvE5eXon
 
 ## Development server
 Run `ng serve` 

@@ -4,7 +4,7 @@
       CRM Application
     </span>
     <span class="fill-remaining-space"></span>
-    <button mat-button routerLink="home">Home</button>
+    <a mat-button routerLink="home">Home</a>
     <button mat-button routerLink="login" *ngIf="!observables.loggedIn">Login</button>
     <!--button mat-button routerLink="login" *ngIf="!isLoggedIn; else notLoggedIn">Login</button>
     <ng-template #notLoggedIn>
@@ -12,4 +12,4 @@
     </ng-template -->
     <button mat-button (click)="onLogout()" *ngIf="observables.loggedIn">Logout</button>
   </mat-toolbar>
-  </ng-container>
+</ng-container>

@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.login(this.form.value)
-    .pipe(first())
     .subscribe(
       response => this.router.navigate([this.returnUrl]),
       err => {

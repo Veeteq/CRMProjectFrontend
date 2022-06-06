@@ -7,25 +7,37 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { JwtInterceptor } from './util/jwt.interceptor';
 import { ErrorInterceptor } from './util/error.interceptor';
+import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FeaturesComponent } from './features/features.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    MenuListItemComponent,
+    FeaturesComponent
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     HttpClientModule,
-    AppRoutingModule,    
+    AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatFormFieldModule,    
+    MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatListModule,
+    MatSidenavModule,
     MatToolbarModule
   ],
   providers: [
