@@ -7,3 +7,7 @@
 .fill-remaining-space {
   flex: 1 1 auto;
 }
+
+.mat-toolbar-buttons .mat-button-base {
+  margin: 8px 8px 8px 0;
+}

@@ -9,9 +9,8 @@ const routes: Routes = [
   { path: '',      pathMatch: 'full', redirectTo: 'home' },
   { path: 'home',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-  { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
   { path: '',      component: FeaturesComponent, children: [
-    { path: 'dashboard',  loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
+    { path: 'dashboard',  loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
   ]},
   { path: '**',    redirectTo: '' }
 ];

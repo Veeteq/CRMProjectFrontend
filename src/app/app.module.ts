@@ -11,6 +11,7 @@ import { JwtInterceptor } from './util/jwt.interceptor';
 import { ErrorInterceptor } from './util/error.interceptor';
 import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -33,6 +34,7 @@ import { FeaturesComponent } from './features/features.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,

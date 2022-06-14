@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from '../model/user';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -7,16 +9,18 @@ import { AuthenticationService } from '../services/authentication.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  isLoggedIn!: Observable<boolean>;
+export class HeaderComponent {
+  currentUser: User;
+  title = "CRM Application";
+  username: string = 'witek';
 
-  constructor(private authenticationService: AuthenticationService) { }
-
-  ngOnInit() {
-    this.isLoggedIn = this.authenticationService.isLoggedIn;
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
+    const currentUser = this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   onLogout() {    
     this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }
