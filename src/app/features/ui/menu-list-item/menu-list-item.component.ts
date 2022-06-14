@@ -17,7 +17,6 @@ import { NavService } from '../service/nav.service';
         ),
     ])
   ]
-
 })
 export class MenuListItemComponent implements OnInit {
   expanded: boolean = false;

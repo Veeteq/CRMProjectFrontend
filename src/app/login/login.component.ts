@@ -22,14 +22,9 @@ export class LoginComponent implements OnInit {
               private router: Router) { 
 
     //redirect to home if already logged in
-    let loggedIn: boolean = false;
-    this.authenticationService.isLoggedIn.subscribe(
-      (val: boolean) => loggedIn = val
-    );
-    if(loggedIn) {
+    if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     } 
-      
   }
 
   ngOnInit(): void {
@@ -60,6 +55,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.login(this.form.value)
+    .pipe(first())
     .subscribe(
       response => this.router.navigate([this.returnUrl]),
       err => {

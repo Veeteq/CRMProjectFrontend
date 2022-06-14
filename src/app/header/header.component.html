@@ -1,15 +1,13 @@
-<ng-container *ngIf="{ loggedIn: (isLoggedIn | async) } as observables">
-  <mat-toolbar color="primary"> <!-- *ngIf="isLoggedIn$ | async as isLoggedIn"> -->
-    <span>
-      CRM Application
-    </span>
+<ng-container>
+  <mat-toolbar color="primary">
+    <span>{{ title }}</span>
+    <span *ngIf="currentUser"> Welcome {{ currentUser.username }}</span>
     <span class="fill-remaining-space"></span>
-    <a mat-button routerLink="home">Home</a>
-    <button mat-button routerLink="login" *ngIf="!observables.loggedIn">Login</button>
-    <!--button mat-button routerLink="login" *ngIf="!isLoggedIn; else notLoggedIn">Login</button>
-    <ng-template #notLoggedIn>
-      <button mat-button (click)="onLogout()">Logout</button>
-    </ng-template -->
-    <button mat-button (click)="onLogout()" *ngIf="observables.loggedIn">Logout</button>
+    <div class="mat-toolbar-buttons">
+    <button mat-raised-button routerLink="home">Home</button>
+    <button mat-raised-button routerLink="dashboard" *ngIf="currentUser">Dashboard</button>
+    <button mat-raised-button routerLink="login"     *ngIf="!currentUser">Login</button>
+    <button mat-raised-button (click)="onLogout()"   *ngIf="currentUser">Logout</button>
+    </div>
   </mat-toolbar>
 </ng-container>

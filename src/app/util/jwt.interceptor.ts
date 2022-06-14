@@ -9,13 +9,12 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let token = this.authenticationService.token();
 
-    if (token) {
-      if (this.authenticationService.isLoggedIn) {
-        request = this.setHeader(request, token);
-      }
+    const currentUser = this.authenticationService.currentUserValue;
+    if (currentUser && currentUser.token && !currentUser.expired()) {
+      request = this.setHeader(request, currentUser.token);      
     }
+     
     return next.handle(request);
   }
 
