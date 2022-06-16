@@ -43,3 +43,9 @@ font-size: 14pt;
 .mat-form-field-flex {
 background-color: #ffffff !important;
 }
+
+.center-div {
+  text-align:center;
+  width: 50%;
+  margin: 0 auto
+}
