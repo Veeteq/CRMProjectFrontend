@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AlertService } from '../alert/alert.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private router: Router) { 
+              private router: Router,
+              private alertService: AlertService) { 
 
     //redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -59,6 +61,7 @@ export class LoginComponent implements OnInit {
     .subscribe(
       response => this.router.navigate([this.returnUrl]),
       err => {
+        this.alertService.error(err, false);
         this.error = err
         this.loading = false;
       }

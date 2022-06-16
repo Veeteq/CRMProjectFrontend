@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCardModule } from "@angular/material/card";
+import { AlertModule } from "../alert/alert.module";
 
 export const routes = [
   { path: '', component: LoginComponent }
@@ -20,6 +21,7 @@ export const routes = [
   ],
   imports: [
     CommonModule,
+    AlertModule,
     FlexLayoutModule,
     MatIconModule,
     MatInputModule,

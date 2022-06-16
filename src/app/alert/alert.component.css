@@ -1,0 +1,44 @@
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.42rem;
+}
+
+.alert-success {
+  background-color: #00C851;
+  border-color: #007E33;
+  color: #ffffff;
+}
+
+.alert-danger {
+  background-color: #ff4444;
+  border-color: #CC0000;
+  color: #ffffff;
+}
+
+.alert-info {
+  background-color: #33b5e5;
+  border-color: #0099CC;
+  color: #ffffff;
+}
+
+.alert-warning {
+  background-color: #ffbb33;
+  border-color: #FF8800;
+  color: #ffffff;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.message-div {
+  flex: 0 0 85%;
+}
+
+.close-div {
+  flex: 1;
+}
