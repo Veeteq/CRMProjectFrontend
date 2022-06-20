@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'home',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: '',      component: FeaturesComponent, children: [
-    { path: 'dashboard',  loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
+    { path: 'dashboard', loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
+    { path: 'statement', loadChildren: () => import('./features/statement/statement.module').then(m => m.StatementModule), canActivate: [AuthGuard] }
   ]},
   { path: '**',    redirectTo: '' }
 ];

@@ -19,13 +19,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FeaturesComponent } from './features/features.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ListComponent } from './features/statement/list/list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MenuListItemComponent,
-    FeaturesComponent
+    FeaturesComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +44,11 @@ import { FeaturesComponent } from './features/features.component';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatSortModule,
+    MatToolbarModule,
+    MatTableModule
   ],
   providers: [
      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor,   multi: true },

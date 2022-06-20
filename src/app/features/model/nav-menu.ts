@@ -20,13 +20,13 @@ export let navMenu: NavItem[] = [
   },
   {
     displayName: 'Statements',
-    iconName: 'face',
-    route: 'user',
+    iconName: 'account_balance',
+    route: 'statement',
     children: [
       {
-        displayName: 'Account Info',
-        iconName: 'account_box',
-        route: 'user/account-info'
+        displayName: 'List',
+        iconName: 'list',
+        route: 'statement/list'
       }
     ]
   },
