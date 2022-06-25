@@ -20,4 +20,10 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
   width: 5%;
   text-align: right;
   padding: 10px;
+  width: 20%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 15px auto;
 }

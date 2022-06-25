@@ -19,13 +19,19 @@ import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-it
 import { HeaderComponent } from './header/header.component';
 import { ErrorInterceptor } from './util/error.interceptor';
 import { JwtInterceptor } from './util/jwt.interceptor';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ListComponent } from './features/statement/list/list.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MenuListItemComponent,
-    FeaturesComponent
+    FeaturesComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +45,11 @@ import { JwtInterceptor } from './util/jwt.interceptor';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatSortModule,
+    MatToolbarModule,
+    MatTableModule
   ],
   providers: [
      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor,   multi: true },

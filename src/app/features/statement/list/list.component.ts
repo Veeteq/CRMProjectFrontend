@@ -12,9 +12,8 @@ import { StatementService } from '../service/statement.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit, AfterViewInit {
-  statements: Statement[] = [];
-  displayedColumns: string[] = ['num', 'fileName', 'reportDate', 'account', 'action'];
   pageSizeOptions:number[] = [20, 50];
+  displayedColumns: string[] = ['id', 'fileName', 'reportDate', 'account', 'action'];
   dataSource: MatTableDataSource<Statement> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
