@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../alert/alert.service';
+import { JwtResponse } from '../model/jwt.response';
 import { AuthenticationService } from '../services/authentication.service';
+import { JwtInterceptor } from '../util/jwt.interceptor';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,6 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   formSubmitted: boolean = false;
-  returnUrl: string;
   error: string;
   loading: boolean = false;
 
@@ -35,9 +36,7 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       'username': ['', Validators.compose([Validators.required])],
       'password': ['', Validators.compose([Validators.required])]
-    });
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    });    
   }
 
   isFieldInvalid(field: string) {
@@ -59,12 +58,27 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.form.value)
     .pipe(first())
     .subscribe(
-      response => this.router.navigate([this.returnUrl]),
+      (jwtResponse: JwtResponse) => this.handleLoginResponse(jwtResponse),
       err => {
         this.alertService.error(err, false);
         this.error = err
         this.loading = false;
       }
     );
-  }  
+  }
+
+  private handleLoginResponse(jwtResponse: JwtResponse) {
+    if (jwtResponse && jwtResponse.token) {
+      this.goToRoute();
+    }
+    this.formSubmitted = false;
+  }
+
+  private goToRoute() {
+    let map: ParamMap = this.route.snapshot.queryParamMap;
+    let returnUrl = map.get('returnUrl') || '/';
+    let queryParams: any = {};    
+
+    this.router.navigate([returnUrl], queryParams);    
+  }
 }

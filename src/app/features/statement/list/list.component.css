@@ -1,0 +1,23 @@
+.container {
+  max-width: 1200px;
+  margin: 15px auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: auto;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  width: 5%;
+  text-align: right;
+  padding: 10px;
+}

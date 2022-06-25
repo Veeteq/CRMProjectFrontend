@@ -1,24 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app.routing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
-import { JwtInterceptor } from './util/jwt.interceptor';
-import { ErrorInterceptor } from './util/error.interceptor';
-import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
 import { FeaturesComponent } from './features/features.component';
+import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
+import { HeaderComponent } from './header/header.component';
+import { ErrorInterceptor } from './util/error.interceptor';
+import { JwtInterceptor } from './util/jwt.interceptor';
 
 @NgModule({
   declarations: [

@@ -1,11 +1,12 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from "rxjs";
-import { map, tap, shareReplay } from 'rxjs/operators';
-import { LoginRequest } from "../model/login.request";
-import { LoginResponse } from "../model/login.response";
-import { environment } from 'src/environments/environment';
 import { DatePipe } from "@angular/common";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { BehaviorSubject, Observable } from "rxjs";
+import { shareReplay, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { JwtResponse } from "../model/jwt.response";
+import { LoginRequest } from "../model/login.request";
 import { User } from "../model/user";
 
 const TOKEN_NAME = 'id_token';
@@ -20,7 +21,8 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private httpClient: HttpClient){
+  constructor(private httpClient: HttpClient,
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(CURRENT_USER)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -29,17 +31,17 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  public login(loginRequest: LoginRequest): Observable<User> {
+  public login(loginRequest: LoginRequest): Observable<JwtResponse> {
     console.log(`AuthenticationService: login ${this.authUrl} ${JSON.stringify(loginRequest)}`);
 
-    return this.httpClient.post<LoginResponse>(this.authUrl, loginRequest)
+    return this.httpClient.post<JwtResponse>(this.authUrl, loginRequest)
     .pipe(
-      map((resp: LoginResponse) => {   
+      tap((resp: JwtResponse) => {   
         const user: User = new User(resp.username, resp.token, resp.expirationDate);
         localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         //this.setSession(user);
         this.currentUserSubject.next(user);
-        return user;
+        return shareReplay();
       })
     )
   }
@@ -49,6 +51,8 @@ export class AuthenticationService {
 
     localStorage.removeItem(CURRENT_USER);
     this.currentUserSubject.next(null);
+
+    this.router.navigate(["/home"]);
   }
 
   
