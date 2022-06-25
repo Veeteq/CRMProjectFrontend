@@ -16,11 +16,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { ImportComponent } from './import/import.component';
 import { ListComponent } from './list/list.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ListComponent } from '../statement/list/list.component';
-import { RouterModule, Routes } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
 
 const routes: Routes = [
   { path: '',       pathMatch: 'full', redirectTo: 'list' },
@@ -53,9 +48,8 @@ const routes: Routes = [
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }
-  { path: 'import', component: ListComponent }
-];
-
+  ]
+})
 @NgModule({
   declarations: [ ],
   imports: [

@@ -9,7 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -19,10 +22,6 @@ import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-it
 import { HeaderComponent } from './header/header.component';
 import { ErrorInterceptor } from './util/error.interceptor';
 import { JwtInterceptor } from './util/jwt.interceptor';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { ListComponent } from './features/statement/list/list.component';
 
 
 @NgModule({
@@ -30,8 +29,7 @@ import { ListComponent } from './features/statement/list/list.component';
     AppComponent,
     HeaderComponent,
     MenuListItemComponent,
-    FeaturesComponent,
-    ListComponent
+    FeaturesComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { Statement } from '../model/statement';
 import { StatementDetail } from '../model/statement-detail';
 import { StatementResponse } from '../model/statement-response';
-import { Statement } from '../statement';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +30,11 @@ export class StatementService {
   }
 
   delete(id: number) {
-    const deleteUrl = `${this.apiUrl}/statements/${id}`;
+    const deleteUrl = `${this.apiUrl}/${id}`;
     return this.httpClient.delete(deleteUrl);
 
-    const getAllUrl = `${this.apiUrl}/statements/`;
+    const getAllUrl = `${this.apiUrl}/`;
     return this.httpClient.get<Statement[]>(`${getAllUrl}`);
   }
 
-  delete(id: number) {
-    return this.httpClient.delete(`${this.apiUrl}/statements/${id}`);
-  }
 }
