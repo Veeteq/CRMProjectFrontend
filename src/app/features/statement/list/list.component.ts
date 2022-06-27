@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Statement } from '../statement';
+import { Statement } from '../model/statement';
 import { StatementService } from '../service/statement.service';
 
 @Component({
@@ -13,7 +13,8 @@ import { StatementService } from '../service/statement.service';
 })
 export class ListComponent implements OnInit, AfterViewInit {
   statements: Statement[] = [];
-  displayedColumns: string[] = ['id', 'fileName', 'reportDate', 'account', 'action'];
+  displayedColumns: string[] = ['num', 'fileName', 'reportDate', 'account', 'action'];
+  pageSizeOptions: number[] = [20, 50];
   dataSource: MatTableDataSource<Statement> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,6 +43,7 @@ export class ListComponent implements OnInit, AfterViewInit {
   private loadAllStatements() {
     this.statementService.getAll().subscribe(
       statements => {
+        console.log(JSON.stringify(statements));
         this.statements = statements;
         this.dataSource = new MatTableDataSource(statements);
         this.dataSource.paginator = this.paginator;
@@ -50,4 +52,5 @@ export class ListComponent implements OnInit, AfterViewInit {
       error => console.log(error)
     );
   }
+  
 }

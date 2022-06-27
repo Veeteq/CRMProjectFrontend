@@ -1,9 +1,10 @@
 <div class="container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+    <!-- Index Column -->
+    <ng-container matColumnDef="num">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Num. </th>
+      <td mat-cell *matCellDef="let i = index">{{ this.paginator.pageIndex == 0 ? i + 1 : 1 + i + this.paginator.pageIndex * this.paginator.pageSize }}
+      </td>
     </ng-container>
 
     <!-- FileName Column -->
@@ -21,7 +22,7 @@
     <!-- Account Column -->
     <ng-container matColumnDef="account">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
-      <td mat-cell *matCellDef="let element"> {{ element.account.name }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.account.username }} </td>
     </ng-container>
 
     <!-- Account Column -->
@@ -36,5 +37,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 50]" aria-label="Select page of users"></mat-paginator>
+  <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="pageSizeOptions" aria-label="Select page of users"></mat-paginator>
 </div>

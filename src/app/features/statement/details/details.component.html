@@ -1,0 +1,20 @@
+<table mat-table [dataSource]="details" class="mat-elevation-z8 detail-table">
+  <ng-container matColumnDef="detail-nr" >
+    <th mat-header-cell *matHeaderCellDef> Nr. </th>
+    <td mat-cell *matCellDef="let detail"> {{detail.sequenceNumber}} </td>
+  </ng-container>
+  <ng-container matColumnDef="detail-date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let detail"> {{detail.operationDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="detail-title">
+    <th mat-header-cell *matHeaderCellDef> Title </th>
+    <td mat-cell *matCellDef="let detail"> {{detail.title}} </td>
+  </ng-container>
+  <ng-container matColumnDef="detail-amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let detail"> {{ detail.amount | currency: 'zł' }} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="detail-head"></tr>
+  <tr mat-row *matRowDef="let details; columns: displayedColumns"></tr>
+</table>
