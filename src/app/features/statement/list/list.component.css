@@ -1,3 +1,8 @@
+.container {
+  max-width: 1200px;
+  margin: 15px auto;
+}
+
 table {
   width: 100%;
 }
@@ -8,10 +13,11 @@ table {
 }
 
 td, th {
-  width: 20%;
+  width: auto;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 15px auto;
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  width: 5%;
+  text-align: right;
+  padding: 10px;
 }

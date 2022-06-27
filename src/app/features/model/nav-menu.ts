@@ -27,7 +27,12 @@ export let navMenu: NavItem[] = [
         displayName: 'List',
         iconName: 'list',
         route: 'statement/list'
-      }
+      },
+      {
+        displayName: 'Import',
+        iconName: 'save_alt',
+        route: 'statement/import'
+      } 
     ]
   },
   {

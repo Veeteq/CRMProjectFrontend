@@ -1,0 +1,24 @@
+.detail-table {
+  width: 95%;
+  margin: 10px 5px;
+}
+
+tr.mat-header-row {
+  height: 32px;
+  font-weight: bold;
+}
+
+tr.mat-row {
+  height: 30px;
+}
+
+.mat-column-detail-nr {
+  width: 25px;
+  border-right: 1px solid currentColor;
+  padding-right: 20px;
+  text-align: center;
+}
+
+.mat-column-detail-amount {
+  text-align: right;
+}

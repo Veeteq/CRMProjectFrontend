@@ -1,0 +1,54 @@
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">      
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <h4>Import Bank Statement</h4>
+        <div fxLayoutAlign="end" style="margin:10px 20px">
+          <button type="button" (click)="resetForm()" mat-raised-button color="primary">Cancel</button>
+          <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Upload</button>
+        </div>
+
+        <div fxLayoutAlign="left">
+          <mat-form-field style="width:30%" appearance="fill">
+            <mat-label>Enter username</mat-label>
+            <input type="text" matInput [formControl]="account" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" autoActiveFirstOption>
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.username}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['account'].invalid">Please choose a valid username</mat-error>
+          </mat-form-field>
+          <mat-form-field style="width:20%" appearance="fill">
+            <mat-label>Report date:</mat-label>
+            <input matInput [matDatepicker]="reportDatePicker" formControlName="reportDate">
+            <mat-datepicker-toggle matSuffix [for]="reportDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #reportDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="left">
+          <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+          <mat-form-field style="width:51%" appearance="fill">
+            <mat-label>Choose file</mat-label>
+            <input type="text" matInput formControlName="fileName">
+            <button type="button" mat-icon-button matSuffix (click)="fileUpload.click()">
+              <mat-icon>attachment</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <app-details *ngIf="statementDetails.length > 0" [details]="statementDetails"></app-details>
+
+      </form>
+    </div>
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+      <h4 *ngIf="file">Preview:</h4>
+      <div fxLayoutAlign="left">        
+        <object #pdfView [data]='' width="700" height="700" type='application/pdf'>
+          <p>Sorry, the PDF couldn't be displayed :(</p>
+          <a href="filename.pdf" target="_blank">Click Here</a>
+        </object>
+      </div>   
+    </div>
+  </div>
+</div>
