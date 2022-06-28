@@ -6,6 +6,9 @@ import { StatementService } from '../service/statement.service';
 import { StatementDetail } from '../model/statement-detail';
 import { UserService } from 'src/app/services/user.service';
 import { StatementResponse } from '../model/statement-response';
+import { DatePipe } from '@angular/common';
+import { AlertService } from 'src/app/alert/alert.service';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-import',
@@ -23,7 +26,9 @@ export class ImportComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, 
               private userService: UserService, 
-              private statementService: StatementService) { }
+              private statementService: StatementService,
+              private alertService: AlertService,
+              private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -48,6 +53,10 @@ export class ImportComponent implements OnInit {
     return this.form.controls.fileName as FormControl;
   }
 
+  get reportDate(): FormControl {
+    return this.form.controls.reportDate as FormControl;
+  }
+
   onSubmit(form: FormGroup) {
     console.log("onSubmit: " + JSON.stringify(form.value));
     form.addControl('details', this.formBuilder.array(this.statementDetails));
@@ -56,11 +65,8 @@ export class ImportComponent implements OnInit {
     formData.append('file', this.file);
     formData.append('data', JSON.stringify(form.value));
     this.statementService.saveStatement(formData).subscribe(
-      data => {
-        this.statementDetails.push(data);
-        this.formSubmitted = true;
-      },
-      err => this.handleError(err)
+      event => this.handleEvent(event),
+      err => this.handleError(err)      
     );
   }  
 
@@ -73,8 +79,9 @@ export class ImportComponent implements OnInit {
       this.file = file;
       this.showData();
 
-      let userId = this.account.value.id
-      this.parseStatement(file, userId);
+      let userId = this.account.value.id;
+      let reportDate: string = this.datePipe.transform(this.reportDate.value, "yyyy-MM-dd");
+      this.parseStatement(file, userId, reportDate);
     }
   }
 
@@ -137,21 +144,35 @@ export class ImportComponent implements OnInit {
     return blob;
   }
 
-  private parseStatement(file: File, userId: number) {
+  private parseStatement(file: File, userId: number, reportDate: any) {
     let formData = new FormData();
     formData.append('file', this.file);
-    this.statementService.parseStatement(formData, userId).subscribe(
+    this.statementService.parseStatement(formData, userId, reportDate).subscribe(
       data => this.handleResponse(data),
       err => this.handleError(err)
     );
-  }  
-
+  }   
   private handleResponse(data: StatementResponse) {
-    this.statementDetails = data.details;
+    if (!data.error) {
+      this.statementDetails = data.details;
+    } else {
+      this.alertService.error(data.error);
+      this.fileName.setErrors({ incorrect: true, message: 'Please enter a 5 digit value'});   
+    }
+  }
+
+  private handleEvent(event: HttpEvent<any>) {
+    if (event instanceof HttpResponse) {
+      let response: HttpResponse<any> = <HttpResponse<any>>event;
+      if (response.status == 201) {
+        this.alertService.success('Bank statment created', true);
+        this.formSubmitted = true;
+      }
+    }
   }
 
   private handleError(err: any) {
     console.error("Error is:", err);
-    //this.displayError(err.message);
+    this.alertService.error(err, true);
   }
 }

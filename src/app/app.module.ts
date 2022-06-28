@@ -16,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertModule } from './alert/alert.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { FeaturesComponent } from './features/features.component';
@@ -33,6 +34,7 @@ registerLocaleData(localePL);
     FeaturesComponent
   ],
   imports: [
+    AlertModule,
     BrowserModule,
     FlexLayoutModule,
     HttpClientModule,
@@ -46,7 +48,8 @@ registerLocaleData(localePL);
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl' },

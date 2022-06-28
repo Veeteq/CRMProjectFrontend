@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ListComponent } from '../statement/list/list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -46,7 +46,8 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: DatePipe },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
