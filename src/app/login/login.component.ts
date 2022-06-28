@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
       'username': ['', Validators.compose([Validators.required])],
       'password': ['', Validators.compose([Validators.required])]
     });
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   isFieldInvalid(field: string) {
@@ -49,8 +47,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("LoginComponent: onSubmit");
     this.formSubmitted = true;
 
+    // reset alerts on submit
+    this.alertService.clear();
+
+    // stop here if form is invalid
     if (this.form.invalid) {
       this.formSubmitted = false;
       return;
@@ -65,6 +68,7 @@ export class LoginComponent implements OnInit {
         this.alertService.error(err, false);
         this.error = err
         this.loading = false;
+        this.formSubmitted = false;
       }
     );
   }
