@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCardModule } from "@angular/material/card";
 import { AlertModule } from "../alert/alert.module";
+import { RouteMessageModule } from "../util/route-message/route-message.module";
 
 export const routes = [
   { path: '', component: LoginComponent }
@@ -29,6 +30,7 @@ export const routes = [
     MatCardModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    RouteMessageModule,
     RouterModule.forChild(routes)
   ]
 })

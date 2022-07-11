@@ -24,6 +24,8 @@ import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-it
 import { HeaderComponent } from './header/header.component';
 import { ErrorInterceptor } from './util/error.interceptor';
 import { JwtInterceptor } from './util/jwt.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './util/confirmation-dialog/confirmation-dialog.component';
 
 registerLocaleData(localePL);
 @NgModule({
@@ -31,7 +33,8 @@ registerLocaleData(localePL);
     AppComponent,
     HeaderComponent,
     MenuListItemComponent,
-    FeaturesComponent
+    FeaturesComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AlertModule,
@@ -42,6 +45,7 @@ registerLocaleData(localePL);
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatListModule,
     MatPaginatorModule,
