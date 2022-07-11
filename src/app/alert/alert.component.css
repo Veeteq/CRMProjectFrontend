@@ -6,15 +6,15 @@
   border-radius: 0.42rem;
 }
 
+.alert-primary {
+  background-color: #3F51B5;
+  border-color: #3F51B5;
+  color: #FFFFFF;
+}
+
 .alert-success {
   background-color: #00C851;
   border-color: #007E33;
-  color: #ffffff;
-}
-
-.alert-danger {
-  background-color: #ff4444;
-  border-color: #CC0000;
   color: #ffffff;
 }
 
@@ -27,6 +27,12 @@
 .alert-warning {
   background-color: #ffbb33;
   border-color: #FF8800;
+  color: #ffffff;
+}
+
+.alert-danger {
+  background-color: #ff4444;
+  border-color: #CC0000;
   color: #ffffff;
 }
 

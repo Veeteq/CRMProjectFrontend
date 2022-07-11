@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ConfirmationDialog } from 'src/app/util/confirmation-dialog/confirmation-dialog';
+import { ConfirmationDialogComponent } from 'src/app/util/confirmation-dialog/confirmation-dialog.component';
 import { Statement } from '../model/statement';
 import { StatementService } from '../service/statement.service';
 
@@ -21,7 +24,8 @@ export class ListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   
   constructor(private authenticationService: AuthenticationService,
-              private statementService: StatementService) { }
+              private statementService: StatementService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     console.log("ListComponent: ngOnInit")
@@ -34,10 +38,19 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   delete(id: number) {
-    console.log(`ListComponent: delete(${id})`);
+    const dialogData = new ConfirmationDialog('Confirm', 'Are you sure you want to delete this statement?');
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation: true,
+            data: dialogData
+        })
 
-    //this.statementervice.delete(id)
-    //    .subscribe(() => this.loadAllStatements());
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult) {
+              console.log(`ListComponent: delete(${id})`);
+              this.statementService.delete(id).subscribe(() => this.loadAllStatements());
+            }
+        });
   }
 
   private loadAllStatements() {

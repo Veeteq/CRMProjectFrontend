@@ -52,7 +52,7 @@ export class AuthenticationService {
     localStorage.removeItem(CURRENT_USER);
     this.currentUserSubject.next(null);
 
-    this.router.navigate(["/home"]);
+    this.router.navigate(["/login"]);
   }
 
   
