@@ -8,6 +8,7 @@ import localePL from '@angular/common/locales/pl';
 import { LOCALE_ID } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -22,10 +23,9 @@ import { AppRoutingModule } from './app.routing';
 import { FeaturesComponent } from './features/features.component';
 import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
 import { HeaderComponent } from './header/header.component';
+import { ConfirmationDialogComponent } from './util/confirmation-dialog/confirmation-dialog.component';
 import { ErrorInterceptor } from './util/error.interceptor';
 import { JwtInterceptor } from './util/jwt.interceptor';
-import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from './util/confirmation-dialog/confirmation-dialog.component';
 
 registerLocaleData(localePL);
 @NgModule({

@@ -1,4 +1,4 @@
-export interface Statement {
+export interface StatementSummary {
   id: number,
   fileName: string;
   raportDate: Date;

@@ -1,16 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from "./login.component";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatCardModule } from "@angular/material/card";
+import { RouterModule } from "@angular/router";
 import { AlertModule } from "../alert/alert.module";
 import { RouteMessageModule } from "../util/route-message/route-message.module";
+import { LoginComponent } from "./login.component";
 
 export const routes = [
   { path: '', component: LoginComponent }
