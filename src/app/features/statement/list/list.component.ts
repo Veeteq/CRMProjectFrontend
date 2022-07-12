@@ -3,10 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ConfirmationDialog } from 'src/app/util/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/util/confirmation-dialog/confirmation-dialog.component';
-import { Statement } from '../model/statement';
+import { StatementSummary } from '../model/statement-summary';
 import { StatementService } from '../service/statement.service';
 
 @Component({
@@ -15,13 +17,18 @@ import { StatementService } from '../service/statement.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit, AfterViewInit {
-  statements: Statement[] = [];
-  displayedColumns: string[] = ['num', 'fileName', 'reportDate', 'account', 'action'];
+  statements: StatementSummary[] = [];
+  displayedColumns: string[] = ['num', 'fileName', 'reportDate', 'account', 'itemsCount', 'totalAmount', 'action'];
   pageSizeOptions: number[] = [20, 50];
-  dataSource: MatTableDataSource<Statement> = new MatTableDataSource();
+  pageSize: number = 20;
+  totalElements: number;
+  dataSource: MatTableDataSource<StatementSummary> = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+  
+  @ViewChild(MatSort)
+  sort: MatSort;
   
   constructor(private authenticationService: AuthenticationService,
               private statementService: StatementService,
@@ -29,12 +36,17 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     console.log("ListComponent: ngOnInit")
-    this.loadAllStatements();
+    this.loadStatements();
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.paginator.page, this.sort.sortChange)
+    .pipe(
+      tap(() => this.loadStatements())
+    )
+    .subscribe();
   }
 
   delete(id: number) {
@@ -48,19 +60,24 @@ export class ListComponent implements OnInit, AfterViewInit {
         dialogRef.afterClosed().subscribe(dialogResult => {
             if (dialogResult) {
               console.log(`ListComponent: delete(${id})`);
-              this.statementService.delete(id).subscribe(() => this.loadAllStatements());
+              this.statementService.delete(id).subscribe(() => this.loadStatements());
             }
         });
   }
 
-  private loadAllStatements() {
-    this.statementService.getAll().subscribe(
-      statements => {
-        console.log(JSON.stringify(statements));
-        this.statements = statements;
-        this.dataSource = new MatTableDataSource(statements);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+  private loadStatements() {
+    let page = this.paginator?.pageIndex ?? 0;
+    let size = this.paginator?.pageSize ?? 20;
+    let column = this.sort?.active ?? "reportDate";
+    let dir = this.sort?.direction ?? "desc";
+    
+    this.statementService.getSummary(page, size, column, dir).subscribe(
+      data => {
+        console.log(JSON.stringify(data));
+        this.statements = data.content;
+        this.dataSource = new MatTableDataSource(this.statements);
+        this.totalElements = data.totalElements;
+        this.pageSize = data.pageSize;
       },
       error => console.log(error)
     );

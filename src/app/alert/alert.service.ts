@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Alert } from './alert';
 import { AlertType } from './alert-type';
 
@@ -10,7 +9,7 @@ import { AlertType } from './alert-type';
 export class AlertService {
   private subject: BehaviorSubject<Alert> = new BehaviorSubject<Alert>(null);
 
-  getAlert(): Observable<any> {
+  getAlert(): Observable<Alert> {
     return this.subject.asObservable();
   }
 

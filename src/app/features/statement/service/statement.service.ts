@@ -1,11 +1,12 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Statement } from '../model/statement';
+import { PageResponse } from '../model/page-response';
 import { StatementDetail } from '../model/statement-detail';
 import { StatementResponse } from '../model/statement-response';
+import { StatementSummary } from '../model/statement-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,19 @@ export class StatementService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable<Statement[]> {
+  getAll(): Observable<StatementSummary[]> {
     const getAllUrl = `${this.apiUrl}/`;
-    return this.httpClient.get<Statement[]>(`${getAllUrl}`);
+    return this.httpClient.get<StatementSummary[]>(`${getAllUrl}`);
+  }
+
+  getSummary(page: number, size: number, column: string, dir: string): Observable<PageResponse> {
+    let params = new HttpParams();
+    params = params.append('page',   page.toString());
+    params = params.append('size',   size.toString());
+    params = params.append('column', column);
+    params = params.append('dir',    dir);
+    const getSummaryUrl = `${this.apiUrl}/summary/`;
+    return this.httpClient.get<PageResponse>(getSummaryUrl, { params });
   }
 
   parseStatement(formData: FormData, userId: number, reportDate: any): Observable<StatementResponse> {
@@ -32,7 +43,7 @@ export class StatementService {
   }
 
   delete(id: number) {
-    const deleteUrl = `${this.apiUrl}/statements/${id}`;
+    const deleteUrl = `${this.apiUrl}/${id}`;
     return this.httpClient.delete(deleteUrl);
   }
 
