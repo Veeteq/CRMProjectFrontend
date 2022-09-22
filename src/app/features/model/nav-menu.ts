@@ -36,6 +36,23 @@ export let navMenu: NavItem[] = [
     ]
   },
   {
+    displayName: 'Documents',
+    iconName: 'request_page',
+    route: 'document',
+    children: [
+      {
+        displayName: 'Add new',
+        iconName: 'add',
+        route: 'document/add'
+      },
+      {
+        displayName: 'List',
+        iconName: 'list',
+        route: 'document/list'
+      }
+    ]
+  },
+  {
     displayName: 'Sign Out',
     iconName: 'highlight_off'
   }
