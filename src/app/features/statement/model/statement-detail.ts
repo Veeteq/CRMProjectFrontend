@@ -1,4 +1,5 @@
 export class StatementDetail {
+  id: number;
   operationDate: Date;
   postingDate: Date;
   operationType: string;

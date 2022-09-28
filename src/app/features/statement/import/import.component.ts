@@ -9,6 +9,7 @@ import { StatementResponse } from '../model/statement-response';
 import { DatePipe } from '@angular/common';
 import { AlertService } from 'src/app/alert/alert.service';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { Account } from 'src/app/model/account';
 
 @Component({
   selector: 'app-import',
@@ -21,8 +22,10 @@ export class ImportComponent implements OnInit {
   file: File;
   statementDetails: StatementDetail[] = [];
   form: FormGroup;
-  filteredOptions: Observable<any[]>;
+  accounts: Observable<Account[]>;
   formSubmitted: boolean = false;
+  statementId: string = null;
+  formAction: string = 'Upload';
 
   constructor(private formBuilder: FormBuilder, 
               private userService: UserService, 
@@ -32,12 +35,13 @@ export class ImportComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      id:         new FormControl(''),
       account:    new FormControl('',         Validators.compose([Validators.required])),
       reportDate: new FormControl(new Date(), Validators.compose([Validators.required])),
       fileName:   new FormControl('',         Validators.compose([Validators.required]))
     });
 
-    this.filteredOptions = this.form.controls.account.valueChanges
+    this.accounts = this.form.controls.account.valueChanges
       .pipe(
         startWith(''),
         switchMap((value) => this._filter(value))
@@ -103,12 +107,12 @@ export class ImportComponent implements OnInit {
     this.pdfView.nativeElement.setAttribute('data', pdfContent);
   }
 
-  private _filter(value: string): Observable<any[]> {
-    return this.userService.getUsers().pipe(
+  private _filter(value: string): Observable<Account[]> {
+    return this.userService.getAccounts().pipe(
       tap(data => console.log("tap: " + JSON.stringify(data))),
       filter(data => !!data),
       map(data => {
-        return data.filter(option => option.username.toLowerCase().includes(value))
+        return data.filter(account => account.username.toLowerCase().includes(value))
       })
     )
   }  
