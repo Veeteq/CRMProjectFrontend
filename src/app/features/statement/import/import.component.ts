@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { filter, map, startWith, switchMap, tap } from 'rxjs/operators';
@@ -33,14 +34,19 @@ export class ImportComponent implements OnInit {
               private userService: UserService, 
               private statementService: StatementService,
               private alertService: AlertService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.statementId = this.activatedRoute.snapshot.paramMap.get("id");
+    this.formAction = this.statementId ? 'Update' : 'Upload';
+
+    const currDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");
     this.form = this.formBuilder.group({
       id:         new FormControl(''),
-      account:    new FormControl('',         Validators.compose([Validators.required])),
-      reportDate: new FormControl(new Date(), Validators.compose([Validators.required])),
-      fileName:   new FormControl('',         Validators.compose([Validators.required]))
+      account:    new FormControl('',       Validators.compose([Validators.required])),
+      reportDate: new FormControl(currDate, Validators.compose([Validators.required])),
+      fileName:   new FormControl('',       Validators.compose([Validators.required]))
     });
 
     if (this.statementId) {
