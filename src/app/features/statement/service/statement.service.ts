@@ -4,9 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PageResponse } from '../model/page-response';
-import { StatementDetail } from '../model/statement-detail';
+import { Statement } from '../model/statement';
 import { StatementResponse } from '../model/statement-response';
-import { StatementSummary } from '../model/statement-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,6 @@ export class StatementService {
   private apiUrl = `${environment.apiUrl}/statements`;
 
   constructor(private httpClient: HttpClient) { }
-
-  getAll(): Observable<StatementSummary[]> {
-    const getAllUrl = `${this.apiUrl}/`;
-    return this.httpClient.get<StatementSummary[]>(`${getAllUrl}`);
-  }
 
   getSummary(page: number, size: number, column: string, dir: string): Observable<PageResponse> {
     let params = new HttpParams();
@@ -36,12 +30,30 @@ export class StatementService {
     return this.httpClient.post<StatementResponse>(parseUrl, formData);
   }
 
-  saveStatement(formData: FormData): Observable<HttpResponse<StatementDetail>> {
+  saveStatement(formData: FormData, isNew: boolean): Observable<HttpResponse<any>> {
     const saveUrl = `${this.apiUrl}/saveBankStatement`;
-    return this.httpClient.post<StatementDetail>(saveUrl, formData, {observe: 'response'})
+
+    if (isNew) {
+      return this.httpClient.post(saveUrl, formData, { observe: 'response' })
+        .pipe(catchError(this.handleError));
+    } else {
+      return this.httpClient.put(saveUrl, formData, { observe: 'response' })
+        .pipe(catchError(this.handleError));
+    }
+  }
+
+  findStatement(statementId: string): Observable<HttpResponse<Statement>> {
+    const findByIdUrl = `${this.apiUrl}/${statementId}`;
+    return this.httpClient.get<Statement>(findByIdUrl, {observe: 'response'} )
     .pipe(catchError(this.handleError));
   }
 
+  findStatmentFile(statementId: string): Observable<HttpResponse<Blob>> {
+    const findByIdUrl = `${this.apiUrl}/${statementId}/file`;
+    return this.httpClient.get(findByIdUrl, {observe: 'response', responseType: 'blob' } )
+    .pipe(catchError(this.handleError));
+  }
+  
   delete(id: number) {
     const deleteUrl = `${this.apiUrl}/${id}`;
     return this.httpClient.delete(deleteUrl);

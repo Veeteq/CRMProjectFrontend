@@ -21,7 +21,8 @@ import { ImportComponent } from './import/import.component';
 const routes: Routes = [
   { path: '',       pathMatch: 'full', redirectTo: 'list' },
   { path: 'list',   component: ListComponent },
-  { path: 'import', component: ImportComponent }
+  { path: 'import', component: ImportComponent },
+  { path: 'import/:id', component: ImportComponent }
 ];
 
 @NgModule({

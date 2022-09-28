@@ -1,15 +1,17 @@
+import { DatePipe } from '@angular/common';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
-import { map, startWith, switchMap, filter, tap } from 'rxjs/operators';
-import { StatementService } from '../service/statement.service';
-import { StatementDetail } from '../model/statement-detail';
-import { UserService } from 'src/app/services/user.service';
-import { StatementResponse } from '../model/statement-response';
-import { DatePipe } from '@angular/common';
+import { filter, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { AlertService } from 'src/app/alert/alert.service';
-import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { Account } from 'src/app/model/account';
+import { UserService } from 'src/app/services/user.service';
+import { Statement } from '../model/statement';
+import { StatementDetail } from '../model/statement-detail';
+import { StatementResponse } from '../model/statement-response';
+import { StatementService } from '../service/statement.service';
 
 @Component({
   selector: 'app-import',
@@ -41,6 +43,31 @@ export class ImportComponent implements OnInit {
       fileName:   new FormControl('',         Validators.compose([Validators.required]))
     });
 
+    if (this.statementId) {
+      this.statementService.findStatement(this.statementId).subscribe(
+        data => {
+          let statement: Statement = data.body;
+          this.form.patchValue(
+            {
+              id: statement.id,
+              account: statement.account,
+              reportDate: moment(statement.reportDate, "YYYY-MM-DD"),
+              fileName: statement.fileName
+            }
+          );
+          this.statementDetails = statement.details;
+        }
+      );
+
+      this.statementService.findStatmentFile(this.statementId).subscribe(
+        file => {
+          this.file = new File([file.body], "file");
+          this.showData();
+        },
+        err => console.error(err)
+      );
+    }
+    
     this.accounts = this.form.controls.account.valueChanges
       .pipe(
         startWith(''),
@@ -68,7 +95,9 @@ export class ImportComponent implements OnInit {
     let formData = new FormData();
     formData.append('file', this.file);
     formData.append('data', JSON.stringify(form.value));
-    this.statementService.saveStatement(formData).subscribe(
+
+    const isNew: boolean = this.form.controls.id.value ? false : true;
+    this.statementService.saveStatement(formData, isNew).subscribe(
       event => this.handleEvent(event),
       err => this.handleError(err)      
     );
