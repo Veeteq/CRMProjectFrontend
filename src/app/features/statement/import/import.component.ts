@@ -28,7 +28,7 @@ export class ImportComponent implements OnInit {
   accounts: Observable<Account[]>;
   formSubmitted: boolean = false;
   statementId: string = null;
-  formAction: string = 'Upload';
+  formAction: string = null;
 
   constructor(private formBuilder: FormBuilder, 
               private userService: UserService, 
