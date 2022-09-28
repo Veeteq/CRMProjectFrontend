@@ -1,10 +1,10 @@
 import { Account } from "src/app/model/account";
+import { StatementDetail } from "./statement-detail";
 
-export interface StatementSummary {
+export class Statement {
   id: number;
   fileName: string;
   reportDate: Date;
   account: Account;
-  itemsCount: number;
-  totalAmount: number;
+  details: StatementDetail[];
 }
