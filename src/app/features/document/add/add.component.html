@@ -1,3 +1,75 @@
-<div class="container">
-  <p>add works!</p>
+<div fxLayout="row"  fxLayoutGap="12px"  [style.margin-top]="'12px'">
+  <mat-card style="width: 40%">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+      <mat-card-actions align="end">
+        <button mat-button>LIKE</button>
+        <button mat-button mat-raised [disabled]="!form.valid || formSubmitted" type="submit">SHARE</button>
+      </mat-card-actions>
+      <div class="mat-body-2">Create new document</div>
+      <div class="mat-body-1">Enter document details.
+        <div fxLayoutAlign="left">
+          <mat-form-field style="width:35%" appearance="fill">
+            <mat-label>Document date</mat-label>
+            <input matInput [matDatepicker]="documentDatePicker" placeholder="Document date" formControlName="documentDate" (dateChange)="onDateChanged($event)">
+            <mat-datepicker-toggle matSuffix [for]="documentDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #documentDatePicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field style="width:25%" appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="documentType">
+              <mat-option *ngFor="let type of documentTypes" [value]="type.name">{{type.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width:35%" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="documentTitle" autocomplete=off>
+            <button type="button" *ngIf="documentTitle.value" matSuffix mat-icon-button aria-label="Clear" (click)=clearDocumentTitle()>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="left" *ngIf="counterpartyVisible()">
+          <mat-form-field style="width:60%" appearance="fill">
+            <mat-label>Counterparty</mat-label>
+            <input type="text" matInput placeholder="Counterparty" [formControl]="counterparty" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCounterparty" autoActiveFirstOption >
+              <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+              <mat-option *ngFor="let counterparty of counterparties" [value]="counterparty">{{counterparty.name}}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="left" *ngIf="bankStatementVisible()">
+          <mat-form-field style="width:100%" appearance="fill">
+            <mat-label>Bank statement</mat-label>
+            <mat-select formControlName="statementDetail" (selectionChange)="onStatementDetailChange($event.value)">
+              <mat-option *ngFor="let detail of statementDetails" [value]="detail">{{displayDetail(detail)}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="left">
+          <mat-form-field style="width:60%" appearance="fill">
+            <mat-label>Account</mat-label>
+            <input type="text" matInput placeholder="Account" [formControl]="account" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser" autoActiveFirstOption >
+              <mat-option *ngFor="let account of accounts | async" [value]="account">{{account.username}}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field style="width:40%" appearance="fill">
+            <mat-label>Payment Method</mat-label>
+            <mat-select formControlName="paymentMethod">
+              <mat-option *ngFor="let method of paymentMethods" [value]="method.name">{{method.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card>
+    <div class="mat-body-2">Impératif</div>
+    <div class="mat-body-1">Se rapproche des langages de type impératif, tels que le Java : utilisation de classes, interfaces, héritage ...</div>
+  </mat-card>
+  <mat-card>
+    <div class="mat-body-2">Impératif</div>
+    <div class="mat-body-1">Se rapproche des langages de type impératif, tels que le Java : utilisation de classes, interfaces, héritage ...</div>
+  </mat-card>
 </div>
