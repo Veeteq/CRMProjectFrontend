@@ -52,8 +52,7 @@ registerLocaleData(localePL);
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    MatToolbarModule,
-    
+    MatToolbarModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl' },
