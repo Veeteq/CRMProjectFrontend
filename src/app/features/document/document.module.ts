@@ -1,6 +1,19 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from "@angular/forms";
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { DateAdapter, MatOptionModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from '@angular/material/select';
+import { RouterModule, Routes } from '@angular/router';
+import { CUSTOM_DATE_FORMAT } from '../model/custom-date-format';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
 
@@ -11,10 +24,31 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AddComponent,
+    ListComponent
+  ],
   imports: [
     CommonModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatRadioModule,
+    MatSelectModule,
     RouterModule.forChild(routes)
+  ],
+  providers: [
+    { provide: DatePipe },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ]
 })
 export class DocumentModule { }
