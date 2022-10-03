@@ -26,13 +26,19 @@ export class DocumentService {
   }
 
   getDocumentTypes(): Observable<any[]> {
-    const typesUrl = `${this.apiUrl}/types`;
-    return this.httpClient.get<any[]>(typesUrl);
+    const documentTypesUrl = `${this.apiUrl}/types`;
+    return this.httpClient.get<any[]>(documentTypesUrl);
   }
 
   getPaymentMethods(): Observable<any[]> {
     const paymentMethodsUrl = `${this.apiUrl}/paymentMethods`;
     return this.httpClient.get<any[]>(paymentMethodsUrl);
+  }
+
+  getUniqueTitles(value: string[]) {
+    console.log("getUniqueTitles: " + value);
+    const documentTitlesUrl = `${this.apiUrl}/documentTitles/${value}`;
+    return this.httpClient.get<string[]>(documentTitlesUrl);
   }
 
   private handleError(error: HttpErrorResponse) {

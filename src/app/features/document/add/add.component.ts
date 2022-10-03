@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
   formAction: string;
   formSubmitted: boolean = false;
   documentId: string;
-  title = 'FormArray Example in Angular Reactive forms';
+  //title = 'FormArray Example in Angular Reactive forms';
   form: FormGroup;
   file: any;
   accounts: Observable<Account[]>;
@@ -34,6 +34,7 @@ export class AddComponent implements OnInit {
   documentTypes: any[];
   paymentMethods: any[];
   statementDetails: StatementDetailSummary[];
+  titles: string[];
   isLoading = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -80,6 +81,7 @@ export class AddComponent implements OnInit {
     this.loadAccounts();
     this.loadStatementDetails(currDate);
     this.loadCounterparties();
+    this.loadTitles();
   }
 
   get account(): FormControl {
@@ -175,6 +177,10 @@ export class AddComponent implements OnInit {
     return counterparty && counterparty.name ? counterparty.name : '';
   }
 
+  displayTitle(title: string): string {
+    return title ? title : '';
+  }
+
   clearDocumentTitle() {
     this.documentTitle.setValue(null);
   }
@@ -223,6 +229,31 @@ export class AddComponent implements OnInit {
       data => {
         console.log(data);
         this.counterparties = data;
+      }
+    )
+  }
+
+  private loadTitles() {
+    this.documentTitle.valueChanges.pipe(
+      startWith(''),
+      filter(res => {
+        return res !== null && res.length >= 2
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.isLoading = true;
+        this.titles = [];
+      }),
+      switchMap((value) => this.documentService.getUniqueTitles(value).pipe(
+        finalize(() => {          
+          this.isLoading = false
+        })
+      ))
+    ).subscribe(
+      data => {
+        console.log(data);
+        this.titles = data;
       }
     )
   }
