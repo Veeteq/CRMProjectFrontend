@@ -30,7 +30,11 @@
           </mat-form-field>
           <mat-form-field style="width:35%" appearance="fill">
             <mat-label>Title</mat-label>
-            <input matInput placeholder="Title" formControlName="documentTitle" autocomplete=off>
+            <input type="text" matInput placeholder="Title" [formControl]="documentTitle" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTitle" autoActiveFirstOption >
+              <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+              <mat-option *ngFor="let title of titles" [value]="title">{{title}}</mat-option>
+            </mat-autocomplete>            
             <button type="button" *ngIf="documentTitle.value" matSuffix mat-icon-button aria-label="Clear" (click)=clearDocumentTitle()>
               <mat-icon>close</mat-icon>
             </button>
