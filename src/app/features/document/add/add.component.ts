@@ -3,13 +3,14 @@ import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { AlertService } from 'src/app/alert/alert.service';
 import { Account } from 'src/app/model/account';
 import { UserService } from 'src/app/services/user.service';
+import { AddDialogComponent } from '../../counterparty/add-dialog/add-dialog.component';
 import { CounterpartyService } from '../../counterparty/service/counterparty.service';
 import { StatementDetailSummary } from '../../statement/model/statement-detail-summary';
 import { StatementService } from '../../statement/service/statement.service';
@@ -137,6 +138,20 @@ export class AddComponent implements OnInit {
     });
   }
 
+  onOpen() {
+    console.log("open");
+    let config = new MatDialogConfig();
+    config.width = '550px';
+    config.data = {name: 'witek', animal: 'lion'};
+
+    const dialogRef = this.dialog.open(AddDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result: ' + result);
+      this.formAction = result;
+    });
+  }
+  
   counterpartyVisible(): boolean {
     return this.documentType.value && this.documentType.value !== 'NOTE';
   }

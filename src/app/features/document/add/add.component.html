@@ -1,12 +1,20 @@
 <div fxLayout="row"  fxLayoutGap="12px"  [style.margin-top]="'12px'">
-  <mat-card style="width: 40%">
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
-      <mat-card-actions align="end">
-        <button mat-button>LIKE</button>
-        <button mat-button mat-raised [disabled]="!form.valid || formSubmitted" type="submit">SHARE</button>
+  <mat-card style="width: 40%" class="card-container">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>Document</mat-card-title>
+        <mat-card-subtitle>Create new</mat-card-subtitle>
+      </mat-card-title-group>
+      <div fxFlex></div>
+      <mat-card-actions [align]="'end'">
+        <button mat-button type="button" (click)="onOpen()">Open</button>
+        <button mat-button type="button">Cancel</button>
+        <button mat-button mat-raised [disabled]="!form.valid || formSubmitted" type="submit">Save</button>
       </mat-card-actions>
-      <div class="mat-body-2">Create new document</div>
-      <div class="mat-body-1">Enter document details.
+    </mat-card-header> 
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
         <div fxLayoutAlign="left">
           <mat-form-field style="width:35%" appearance="fill">
             <mat-label>Document date</mat-label>
@@ -61,8 +69,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-      </div>
-    </form>
+      </form>
+    </mat-card-content>
   </mat-card>
   <mat-card>
     <div class="mat-body-2">Impératif</div>
