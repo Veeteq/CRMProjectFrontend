@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/alert/alert.service';
 import { Account } from 'src/app/model/account';
 import { UserService } from 'src/app/services/user.service';
 import { AddDialogComponent } from '../../counterparty/add-dialog/add-dialog.component';
+import { Counterparty } from '../../counterparty/model/counterparty';
 import { CounterpartyService } from '../../counterparty/service/counterparty.service';
 import { StatementDetailSummary } from '../../statement/model/statement-detail-summary';
 import { StatementService } from '../../statement/service/statement.service';
@@ -30,12 +31,14 @@ export class AddComponent implements OnInit {
   form: FormGroup;
   file: any;
   accounts: Observable<Account[]>;
-  counterparties: any[];
+  counterparties: Counterparty[];
   documentTypes: any[];
   paymentMethods: any[];
   statementDetails: StatementDetailSummary[];
   titles: string[];
   isLoading = false;
+  eventType: string = "Expense";
+  eventTypes: string[] = ["Expense", "Income","Transfer"];
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -140,7 +143,7 @@ export class AddComponent implements OnInit {
     });
   }
 
-  onOpen() {
+  onAddCounterparty() {
     console.log("open");
     let config = new MatDialogConfig();
     config.width = '550px';
@@ -149,7 +152,8 @@ export class AddComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result: ' + result);
+      this.counterparty.setValue(result);
+      console.log('The dialog was closed with result: ' + JSON.stringify(result));
       this.formAction = result;
     });
   }
@@ -162,10 +166,15 @@ export class AddComponent implements OnInit {
     return this.statementDetails && this.statementDetails.length > 0;
   }
 
+  addCounterpartyVisible(): boolean {
+    const counterparty: Counterparty = this.counterparty.value;
+    return !(typeof counterparty === 'object');
+  }
+
   resetForm(): void {}
 
 
-  displayUser(account: Account): string {
+  displayAccount(account: Account): string {
     return account && account.username ? account.username : '';
   }
 
@@ -173,8 +182,8 @@ export class AddComponent implements OnInit {
     return detail ? detail.account.username + " | " + detail.operationDate + " | " + detail.title + " | " + detail.amount : '';
   }
 
-  displayCounterparty(counterparty: any) {
-    return counterparty && counterparty.name ? counterparty.name : '';
+  displayCounterparty(counterparty: Counterparty) {
+    return counterparty && counterparty.shortname ? counterparty.shortname : '';
   }
 
   displayTitle(title: string): string {
@@ -194,7 +203,6 @@ export class AddComponent implements OnInit {
 
   private loadAccounts() {
     this.accounts = this.form.controls.account.valueChanges.pipe(
-      tap(value => console.log(value)),
       startWith(''),
       switchMap((value) => this.filterAccounts(value))
     );
@@ -215,7 +223,7 @@ export class AddComponent implements OnInit {
         return res !== null && res.length >= 3
       }),
       distinctUntilChanged(),
-      debounceTime(1000),
+      debounceTime(100),
       tap(() => {
         this.isLoading = true;
         this.counterparties = [];
@@ -237,11 +245,12 @@ export class AddComponent implements OnInit {
     this.documentTitle.valueChanges.pipe(
       startWith(''),
       filter(res => {
-        return res !== null && res.length >= 2
+        return res !== null && res.length >= 1
       }),
-      distinctUntilChanged(),
-      debounceTime(1000),
-      tap(() => {
+      //distinctUntilChanged(),
+      //debounceTime(100),
+      tap((val) => {
+        console.log("val: " + val);
         this.isLoading = true;
         this.titles = [];
       }),
@@ -260,24 +269,13 @@ export class AddComponent implements OnInit {
 
   private filterAccounts(value: string): Observable<Account[]> {
     return this.userService.getAccounts().pipe(
-      tap(data => console.log("tap: " + JSON.stringify(data))),
       filter(data => !!data),
       map(data => {
-        return data.filter(option => option.username.toLowerCase().includes(value))
+        return data.filter(option => option.username.toLowerCase().includes(value));
       })
     )
   }
-/*
-  private filterCounterpaties(value: string): Observable<any[]> {
-    return this.counterpartyService.getCounterparties(value).pipe(
-      tap(data => console.log("tap: " + value + ", " + JSON.stringify(data))),
-      filter(data => !!data),
-      map(data => {
-        return data.filter(option => option.name.startsWith(value))
-      })
-    );
-  }
-*/
+
   private handleEvent(event: HttpEvent<any>) {
     if (event instanceof HttpResponse) {
       let response: HttpResponse<any> = <HttpResponse<any>>event;
