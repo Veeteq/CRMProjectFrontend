@@ -10,3 +10,14 @@
 .mat-raised-button {
   margin: 0px 4px;
 }
+
+.mat-small {
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
+  min-height: 20px;
+  vertical-align: top;
+  font-size: 13px;
+  padding: 0 0;
+  margin: 0;
+}
