@@ -78,7 +78,7 @@ export class AddComponent implements OnInit {
       paymentMethod:   new FormControl('', Validators.compose([Validators.required])),
       counterparty:    new FormControl(''),
       statementDetail: new FormControl(''),
-      events: this.formBuilder.array([])
+      events:          this.formBuilder.array([])
     });
 
     this.loadAccounts();
@@ -111,7 +111,11 @@ export class AddComponent implements OnInit {
     return this.form.controls.events as FormArray;
   }
 
-  addEvent() {
+  get eventControls() {
+    return (this.form.controls.events as FormArray).controls as FormGroup[];
+  }
+
+  onAddEvent() {
     this.events.push(this.newEvent());
   }
 

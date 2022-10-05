@@ -16,6 +16,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CUSTOM_DATE_FORMAT } from '../model/custom-date-format';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   { path: '',       pathMatch: 'full', redirectTo: 'list' },
@@ -26,7 +27,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AddComponent,
-    ListComponent
+    ListComponent,
+    EventComponent
   ],
   imports: [
     CommonModule,
