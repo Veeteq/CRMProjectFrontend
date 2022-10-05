@@ -1,7 +1,8 @@
 <div fxLayout="row"  fxLayoutGap="12px"  [style.margin-top]="'12px'">
   <div fxLayout="column" style="width: 40%" fxLayoutGap="10px">
-    <mat-card class="card-container mat-elevation-z3 outline">
-      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+      <mat-card class="card-container mat-elevation-z3 outline">      
         <mat-card-header style="margin-bottom: 8px;">
           <mat-card-title-group>
             <mat-card-title>Document</mat-card-title>
@@ -83,22 +84,28 @@
             </mat-form-field>            
           </div>
         </mat-card-content>
-      </form>
-    </mat-card>
+      
+      </mat-card>
 
-    <mat-card style="padding-top: 05px;">
-      <mat-card-header style="margin-bottom: 8px;">
-        <mat-card-title-group>
-          <mat-card-subtitle>Create new</mat-card-subtitle>
-        </mat-card-title-group>
-        <div fxFlex></div>
-        <mat-card-actions [align]="'end'">
-          <button mat-raised-button type="button" class="mat-small">Add</button>
-        </mat-card-actions>
-      </mat-card-header>
-      <div class="mat-body-2">Impératif</div>
-      <div class="mat-body-1">Se rapproche des langages de type impératif, tels que le Java : utilisation de classes, interfaces, héritage ...</div>
-    </mat-card>
+      <mat-card style="padding-top: 5px; margin-top: 10px;">
+        <mat-card-header style="margin-bottom: 8px;">
+          <mat-card-title-group>
+            <mat-card-subtitle>Create new</mat-card-subtitle>
+          </mat-card-title-group>
+          <div fxFlex></div>
+          <mat-card-actions [align]="'end'">
+            <button mat-raised-button type="button" class="mat-small" (click)="onAddEvent()">Add</button>
+          </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+          <div formArrayName="events" class="sections">
+            <div *ngFor="let event of eventControls; let idx = index">
+              <app-event [formGroupName]="idx" [event]="event" [eventIdx]="idx" [events]="events"></app-event>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
   </div>
   <div>
     <mat-card>
