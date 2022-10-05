@@ -199,9 +199,13 @@ export class AddComponent implements OnInit {
   }
 
   private newEvent(): FormGroup {
-    return this.formBuilder.group({
-      title: ['', Validators.required],
-      level: ['beginner', Validators.required]
+    return this.formBuilder.group({      
+      id:      new FormControl(''),
+      product: new FormControl('', Validators.required),
+      count:   new FormControl(1,  Validators.required),
+      price:   new FormControl(0,  Validators.required),
+      total:   new FormControl(0,  Validators.required),
+      comment: new FormControl('')
     });
   }
 
