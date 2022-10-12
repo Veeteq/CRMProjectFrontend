@@ -1,0 +1,32 @@
+<mat-card>
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+      <mat-form-field style="width:14%;" appearance="fill">
+        <mat-select [formControl]="type">
+          <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{eventType}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width:20%" appearance="fill">
+        <input type="text" matInput [formControl]="product" placeholder="Title"  [matAutocomplete]="autoProduct">
+        <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayProduct" autoActiveFirstOption >
+          <mat-option *ngFor="let product of products | async" [value]="product">{{product.name}}</mat-option>
+        </mat-autocomplete>        
+      </mat-form-field>
+
+      <mat-form-field style="width:8%;" appearance="fill">
+        <input matInput [formControl]="count" style="text-align: right;" placeholder="Count" (blur)="onBlurCount($event)">
+      </mat-form-field>
+      <mat-form-field style="width:8%;" appearance="fill">
+        <input matInput [formControl]="price" style="text-align: right;" placeholder="Price" (blur)="onBlurPrice($event)">
+      </mat-form-field>
+      <mat-form-field style="width:8%;" appearance="fill">
+        <input matInput [formControl]="total" style="text-align: right;" placeholder="Total" (blur)="onBlurTotal($event)">
+      </mat-form-field>
+      <mat-form-field style="width:20%;" appearance="fill">
+        <input matInput [formControl]="comment" placeholder="Comment">
+      </mat-form-field>
+      <button mat-raised-button class="mat-small" type="submit" [disabled]="!form.valid">Add</button>
+    </form>
+  </div>
+</mat-card>

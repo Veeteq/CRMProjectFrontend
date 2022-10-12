@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,11 +15,7 @@ export class EventComponent implements OnInit {
   
   constructor(private productService: ProductService) { }
 
-  ngOnInit(): void {
-    this.count.valueChanges.subscribe(
-      val => this.onCountChange(val)
-    );
-  }
+  ngOnInit(): void { }
 
   get product(): FormControl {
     return this.event.controls.product as FormControl;
@@ -44,8 +41,11 @@ export class EventComponent implements OnInit {
     this.events.removeAt(this.eventIdx);
   }
 
-  private onCountChange(value: number) {
-    
+  displayProduct(product: Product): string {
+    return product && product.name ? product.name : '';
+  }
+  
+  private onCountChange(value: number) {    
     let count = Number(value);
     let price = Number(this.price.value);
     let total = Number(this.total.value);
