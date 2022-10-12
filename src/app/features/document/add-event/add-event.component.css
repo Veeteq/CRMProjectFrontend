@@ -1,0 +1,21 @@
+.mat-card {
+  padding-top: 4px; 
+  margin-top: 9px;
+  font-size: 12px;
+}
+
+.mat-form-field {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mat-small {
+  width: 20px;
+  height: 22px;
+  line-height: 20px;
+  min-height: 20px;
+  /* vertical-align: top; */
+  font-size: 13px;
+  padding: 0 0;
+  margin: 0;
+}

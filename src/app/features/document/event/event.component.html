@@ -1,8 +1,10 @@
 <div class="form-row" [formGroup]="event">  
   <input type="hidden" formControlName="id">
   <mat-form-field style="width:30%" appearance="fill">
-    <input matInput [formControl]="product" placeholder="Product">
-  </mat-form-field>
+    <input matInput [formControl]="product" placeholder="Product" [matAutocomplete]="autoProduct">
+    <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayProduct" autoActiveFirstOption >
+    </mat-autocomplete>    
+  </mat-form-field>    
   <mat-form-field style="width:9%" appearance="fill">
     <input matInput [formControl]="count" style="text-align: right;" placeholder="Count">
   </mat-form-field>

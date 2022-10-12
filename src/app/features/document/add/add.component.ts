@@ -37,8 +37,6 @@ export class AddComponent implements OnInit {
   statementDetails: StatementDetailSummary[];
   titles: string[];
   isLoading = false;
-  eventType: string = "Expense";
-  eventTypes: string[] = ["Expense", "Income","Transfer"];
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -76,7 +74,7 @@ export class AddComponent implements OnInit {
       documentTitle:   new FormControl('', Validators.compose([Validators.required])),
       account:         new FormControl('', Validators.compose([Validators.required])),
       paymentMethod:   new FormControl('', Validators.compose([Validators.required])),
-      counterparty:    new FormControl(''),
+      counterparty:    new FormControl(new Counterparty),
       statementDetail: new FormControl(''),
       events:          this.formBuilder.array([])
     });
@@ -85,6 +83,10 @@ export class AddComponent implements OnInit {
     this.loadStatementDetails(currDate);
     this.loadCounterparties();
     this.loadTitles();
+
+    this.events.valueChanges.subscribe(
+      data => console.log(data)
+    )
   }
 
   get account(): FormControl {
@@ -113,14 +115,6 @@ export class AddComponent implements OnInit {
 
   get eventControls() {
     return (this.form.controls.events as FormArray).controls as FormGroup[];
-  }
-
-  onAddEvent() {
-    this.events.push(this.newEvent());
-  }
-
-  removeEvent(i: number) {
-    this.events.removeAt(i);
   }
 
   onSubmit(form: FormGroup): void {
@@ -182,11 +176,11 @@ export class AddComponent implements OnInit {
     return account && account.username ? account.username : '';
   }
 
-  displayDetail(detail : StatementDetailSummary) {
+  displayDetail(detail : StatementDetailSummary): string {
     return detail ? detail.account.username + " | " + detail.operationDate + " | " + detail.title + " | " + detail.amount : '';
   }
 
-  displayCounterparty(counterparty: Counterparty) {
+  displayCounterparty(counterparty: Counterparty): string {
     return counterparty && counterparty.shortname ? counterparty.shortname : '';
   }
 
@@ -196,17 +190,6 @@ export class AddComponent implements OnInit {
 
   clearDocumentTitle() {
     this.documentTitle.setValue(null);
-  }
-
-  private newEvent(): FormGroup {
-    return this.formBuilder.group({      
-      id:      new FormControl(''),
-      product: new FormControl('', Validators.required),
-      count:   new FormControl(1,  Validators.required),
-      price:   new FormControl(0,  Validators.required),
-      total:   new FormControl(0,  Validators.required),
-      comment: new FormControl('')
-    });
   }
 
   private loadAccounts() {

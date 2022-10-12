@@ -14,9 +14,10 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Routes } from '@angular/router';
 import { CUSTOM_DATE_FORMAT } from '../model/custom-date-format';
+import { AddEventComponent } from './add-event/add-event.component';
 import { AddComponent } from './add/add.component';
-import { ListComponent } from './list/list.component';
 import { EventComponent } from './event/event.component';
+import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
   { path: '',       pathMatch: 'full', redirectTo: 'list' },
@@ -27,8 +28,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AddComponent,
-    ListComponent,
-    EventComponent
+    AddEventComponent,
+    EventComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,
