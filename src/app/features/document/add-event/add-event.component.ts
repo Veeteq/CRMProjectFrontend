@@ -64,7 +64,7 @@ export class AddEventComponent implements OnInit {
       product: new FormControl(new Product(value.product)),
       count:   new FormControl(value.count),
       price:   new FormControl(price),
-      total:   new FormControl(Math.round(((value.count * price) + Number.EPSILON) * 100) / 100),
+      total:   new FormControl((Math.round(((value.count * price) + Number.EPSILON) * 100) / 100).toFixed(2)),
       comment: new FormControl(value.comment)
     });
   }

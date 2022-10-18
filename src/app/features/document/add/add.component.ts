@@ -15,6 +15,7 @@ import { Counterparty } from '../../counterparty/model/counterparty';
 import { CounterpartyService } from '../../counterparty/service/counterparty.service';
 import { StatementDetailSummary } from '../../statement/model/statement-detail-summary';
 import { StatementService } from '../../statement/service/statement.service';
+import { FinancialEvent } from '../model/financial-event';
 import { DocumentService } from '../service/document.service';
 
 @Component({
@@ -24,14 +25,13 @@ import { DocumentService } from '../service/document.service';
 })
 export class AddComponent implements OnInit {
   selected = "";
-  formAction: string;
+  formAction: string = "Save";
   formSubmitted: boolean = false;
   documentId: string;
-  //title = 'FormArray Example in Angular Reactive forms';
   form: FormGroup;
   file: any;
   accounts: Observable<Account[]>;
-  counterparties: Counterparty[];
+  counterparties: Observable<Counterparty[]>;
   documentTypes: any[];
   paymentMethods: any[];
   statementDetails: StatementDetailSummary[];
@@ -51,7 +51,6 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("ngOnInit");
-    this.formAction = "Save";
     this.documentId = this.activatedRoute.snapshot.paramMap.get("id");
 
     this.documentService.getDocumentTypes().subscribe(
@@ -74,7 +73,7 @@ export class AddComponent implements OnInit {
       documentTitle:   new FormControl('', Validators.compose([Validators.required])),
       account:         new FormControl('', Validators.compose([Validators.required])),
       paymentMethod:   new FormControl('', Validators.compose([Validators.required])),
-      counterparty:    new FormControl(new Counterparty),
+      counterparty:    new FormControl(new Counterparty()),
       statementDetail: new FormControl(''),
       events:          this.formBuilder.array([])
     });
@@ -85,7 +84,10 @@ export class AddComponent implements OnInit {
     this.loadTitles();
 
     this.events.valueChanges.subscribe(
-      data => console.log(data)
+      (events: FinancialEvent[]) => {        
+        const sum = events.map(event => event.count * event.price).reduce((acc, cur) => acc + cur, 0);
+        console.log(sum.toFixed(2));
+      }
     )
   }
 
@@ -156,6 +158,14 @@ export class AddComponent implements OnInit {
     });
   }
   
+  onCounterpartySelected(event: any) {
+    console.log("onCounterpartySelected: " + event.option.value);
+  }
+  
+  onCounterpartyBlur(event: any) {
+    console.log("onCounterpartyBlur: " + event.option.value);
+  }
+
   counterpartyVisible(): boolean {
     return this.documentType.value && this.documentType.value !== 'NOTE';
   }
@@ -165,8 +175,11 @@ export class AddComponent implements OnInit {
   }
 
   addCounterpartyVisible(): boolean {
-    const counterparty: Counterparty = this.counterparty.value;
-    return !(typeof counterparty === 'object');
+    const counterparty: Counterparty = this.counterparty.value;    
+    if (typeof counterparty === 'object') {
+      return counterparty.id === undefined;
+    }
+    return true;
   }
 
   resetForm(): void {}
@@ -208,7 +221,7 @@ export class AddComponent implements OnInit {
   }
 
   private loadCounterparties() {
-    this.counterparty.valueChanges.pipe(
+    this.counterparties = this.counterparty.valueChanges.pipe(
       startWith(''),
       filter(res => {
         return res !== null && res.length >= 3
@@ -216,19 +229,9 @@ export class AddComponent implements OnInit {
       distinctUntilChanged(),
       debounceTime(100),
       tap(() => {
-        this.isLoading = true;
-        this.counterparties = [];
+        this.isLoading = true
       }),
-      switchMap((value) => this.counterpartyService.getCounterpartiesByName(value).pipe(
-        finalize(() => {          
-          this.isLoading = false
-        })
-      ))
-    ).subscribe(
-      data => {
-        console.log(data);
-        this.counterparties = data;
-      }
+      switchMap((value) => this.filterCounterparties(value))      
     )
   }
 
@@ -267,6 +270,15 @@ export class AddComponent implements OnInit {
     )
   }
 
+  private filterCounterparties(value: string): Observable<Counterparty[]> {
+    return this.counterpartyService.getCounterpartiesByName(value).pipe(
+      finalize(() => {          
+        this.isLoading = false          
+      }),
+      map(data => data)
+    )
+  }
+  
   private handleEvent(event: HttpEvent<any>) {
     if (event instanceof HttpResponse) {
       let response: HttpResponse<any> = <HttpResponse<any>>event;
