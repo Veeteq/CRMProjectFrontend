@@ -11,7 +11,7 @@
           <div fxFlex></div>
           <mat-card-actions [align]="'end'">
             <button mat-raised-button type="button">Cancel</button>
-            <button mat-raised-button [disabled]="!form.valid || formSubmitted" type="submit">Save</button>
+            <button mat-raised-button [disabled]="!form.valid" type="submit">Save</button>
           </mat-card-actions>
         </mat-card-header>
 
@@ -44,9 +44,10 @@
           <div fxLayoutAlign="left" *ngIf="counterpartyVisible()">
             <mat-form-field style="width:60%" appearance="fill">
               <mat-label>Counterparty</mat-label>
-              <input type="text" matInput placeholder="Counterparty" [formControl]="counterparty" [matAutocomplete]="autoCounterparty">
-              <mat-autocomplete #autoCounterparty="matAutocomplete" [displayWith]="displayCounterparty" autoActiveFirstOption >
-                <mat-option *ngFor="let cprt of counterparties" [value]="cprt">{{cprt.shortname}}</mat-option>
+              <input type="text" matInput placeholder="Counterparty" [formControl]="counterparty" [matAutocomplete]="autoCounterparty"> <!-- (blur)="onCounterpartyBlur($event)" -->
+              <mat-autocomplete #autoCounterparty="matAutocomplete" [displayWith]="displayCounterparty" autoActiveFirstOption> <!-- (optionSelected)="onCounterpartySelected($event) -->
+                <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                <mat-option *ngFor="let cprt of counterparties | async" [value]="cprt">{{cprt.shortname}}</mat-option>
               </mat-autocomplete>
               <button type="button" mat-button matSuffix mat-icon-button aria-label="add" *ngIf="addCounterpartyVisible()" (click)="onAddCounterparty()">
                 <mat-icon>add</mat-icon>
