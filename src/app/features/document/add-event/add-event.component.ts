@@ -52,7 +52,6 @@ export class AddEventComponent implements OnInit {
   onSubmit(form: FormGroup) {
     console.log("onSubmit: " + JSON.stringify(form.value));
     this.events.push(this.newEvent(form.value));
-    //this.form = this.buildFormGroup();
   }
 
   private newEvent(value: FinancialEvent): FormGroup {
