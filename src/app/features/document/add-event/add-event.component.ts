@@ -52,7 +52,7 @@ export class AddEventComponent implements OnInit {
   onSubmit(form: FormGroup) {
     console.log("onSubmit: " + JSON.stringify(form.value));
     this.events.push(this.newEvent(form.value));
-    this.form = this.buildFormGroup();
+    //this.form = this.buildFormGroup();
   }
 
   private newEvent(value: FinancialEvent): FormGroup {
@@ -135,8 +135,9 @@ export class AddEventComponent implements OnInit {
     );
   }
 
-  private filterProduct(product: Product): Observable<Product[]> {
-    return this.productService.getProductsByName(product.name).pipe(
+  private filterProduct(value: string): Observable<Product[]> {
+    console.log("value: " + value);
+    return this.productService.getProductsByName(value).pipe(
       filter(data => !!data)
     )
   }
