@@ -10,13 +10,16 @@ import { DateAdapter, MatOptionModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { CUSTOM_DATE_FORMAT } from '../model/custom-date-format';
 import { AddEventComponent } from './add-event/add-event.component';
 import { AddComponent } from './add/add.component';
-import { EventComponent } from './event/event.component';
+import { EventListComponent } from './event-list/event-list.component';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
@@ -29,7 +32,7 @@ const routes: Routes = [
   declarations: [
     AddComponent,
     AddEventComponent,
-    EventComponent,
+    EventListComponent,
     ListComponent
   ],
   imports: [
@@ -43,8 +46,11 @@ const routes: Routes = [
     MatIconModule,
     MatInputModule,
     MatOptionModule,
+    MatPaginatorModule,
     MatRadioModule,
     MatSelectModule,
+    MatSortModule,
+    MatTableModule,
     RouterModule.forChild(routes)
   ],
   providers: [

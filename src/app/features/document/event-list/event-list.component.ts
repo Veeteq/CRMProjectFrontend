@@ -1,22 +1,46 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Product } from 'src/app/model/product';
-import { ProductService } from 'src/app/services/product.service';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormArray } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { FinancialEvent } from '../model/financial-event';
 
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  selector: 'app-event-list',
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.css']
 })
-export class EventComponent implements OnInit {
-  @Input() event: FormGroup;
-  @Input() events: FormArray;
-  @Input() eventIdx: number;
+export class EventListComponent implements OnInit, AfterViewInit {
+  @Input()
+  events: FormArray;
   
-  constructor(private productService: ProductService) { }
+  @ViewChild(MatSort)
+  sort: MatSort;
+  
+  displayedColumns: string[] = ['num', 'product','count','price','total','comment','action'];
+  dataSource: MatTableDataSource<FinancialEvent> = new MatTableDataSource();
+  
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.events.valueChanges.subscribe(
+      (events: FinancialEvent[]) => {        
+        this.dataSource = new MatTableDataSource(events);        
+      }
+    );
+  }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
+
+  getTotal(): string {
+    return this.dataSource.data.map(t => t.total * 1).reduce((acc: number, value: number) => { return acc + value;}, 0).toFixed(2);
+  }
+
+  deleteEvent(idx: number) {
+    this.events.removeAt(idx);
+  }
+/*
   get product(): FormControl {
     return this.event.controls.product as FormControl;
   }
@@ -51,10 +75,7 @@ export class EventComponent implements OnInit {
     let total = Number(this.total.value);
     if (count && !isNaN(count) && price && !isNaN(price)) {
       this.calculateTotal(count, price)
-    }        
-    //if (!isNaN(count) && !isNaN(total)) {
-    //  this.calculatePrice(total, count)
-    //}                
+    }                     
   }
 
   private calculateTotal(v1: number, v2: number) {
@@ -72,4 +93,5 @@ export class EventComponent implements OnInit {
     console.log("calculateCount: " + t1 + ", " + v1);
     this.count.setValue(t1 / v1);
   }
+*/  
 }

@@ -80,17 +80,12 @@
         </mat-card-content>
       </mat-card>
 
-      <app-add-event [events]="events"></app-add-event>
+      <mat-card class="card-container mat-elevation-z3 outline" style="padding-top: 4px; margin-top: 9px;">
+        <app-add-event [events]="events"></app-add-event>
+      </mat-card>
 
-      <mat-card *ngIf="events.length > 0" style="padding-top: 4px; margin-top: 9px;">
-
-        <mat-card-content>
-          <div formArrayName="events" class="sections">
-            <div *ngFor="let event of eventControls; let idx = index">
-              <app-event [formGroupName]="idx" [event]="event" [eventIdx]="idx" [events]="events"></app-event>
-            </div>
-          </div>
-        </mat-card-content>
+      <mat-card *ngIf="eventListVisible" class="card-container mat-elevation-z3 outline" style="padding-top: 4px; margin-top: 9px;">
+        <app-event-list [events]="events"></app-event-list>
       </mat-card>
     </form>
   </div>

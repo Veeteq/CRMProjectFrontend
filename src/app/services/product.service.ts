@@ -25,7 +25,7 @@ export class ProductService {
         return data.map((product: any) => new Product({
             id: product.id,
             name: product.name,
-            category: product.category.name
+            category: product.category?.name
           }));
       }));
   }

@@ -37,6 +37,7 @@ export class AddComponent implements OnInit {
   statementDetails: StatementDetailSummary[];
   titles: string[];
   isLoading = false;
+  eventListVisible: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -84,7 +85,8 @@ export class AddComponent implements OnInit {
     this.loadTitles();
 
     this.events.valueChanges.subscribe(
-      (events: FinancialEvent[]) => {        
+      (events: FinancialEvent[]) => {      
+        this.eventListVisible = events.length > 0;  
         const sum = events.map(event => event.count * event.price).reduce((acc, cur) => acc + cur, 0);
         console.log(sum.toFixed(2));
       }
