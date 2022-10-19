@@ -6,5 +6,6 @@ export class FinancialEvent {
   product: Product;
   count:   number;
   price:   number;
+  total:   number;
   comment: string;
 }
