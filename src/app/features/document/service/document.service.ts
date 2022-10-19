@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { DocumentDetail } from "../model/document-detail";
+import { PageResponse } from "../model/page-response";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,16 @@ export class DocumentService {
     }
   }
 
+  getSummary(page: number, size: number, column: string, dir: string): Observable<PageResponse> {
+    let params = new HttpParams();
+    params = params.append('page',   page.toString());
+    params = params.append('size',   size.toString());
+    params = params.append('column', column);
+    params = params.append('dir',    dir);
+    const getSummaryUrl = `${this.apiUrl}/summary/`;
+    return this.httpClient.get<PageResponse>(getSummaryUrl, { params });
+  }
+  
   getDocumentTypes(): Observable<any[]> {
     const documentTypesUrl = `${this.apiUrl}/types`;
     return this.httpClient.get<any[]>(documentTypesUrl);
