@@ -13,7 +13,7 @@ export class DocumentService {
   private apiUrl = `${environment.apiUrl}/documents`;
 
   constructor(private httpClient: HttpClient) { }
- 
+
   saveDocument(formData: FormData, isNew: boolean): Observable<HttpResponse<DocumentDetail>> {
     const saveUrl = `${this.apiUrl}/save`;
 
@@ -35,7 +35,7 @@ export class DocumentService {
     const getSummaryUrl = `${this.apiUrl}/summary/`;
     return this.httpClient.get<PageResponse>(getSummaryUrl, { params });
   }
-  
+
   getDocumentTypes(): Observable<any[]> {
     const documentTypesUrl = `${this.apiUrl}/types`;
     return this.httpClient.get<any[]>(documentTypesUrl);
