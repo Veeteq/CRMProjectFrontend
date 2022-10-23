@@ -17,19 +17,37 @@ td, th {
   font-size: 12px;
 }
 
-th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-  width: 5%;
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  width: 4%;
   text-align: right;
-  padding: 8px;
+  padding-right: 8px;
 }
 
-td.mat-column-itemsCount, td.mat-column-totalAmount {
+td.mat-column-documentBalance {
+  width: 8%;
   text-align: right;
-  padding: 10px;
+  padding-right: 10px;
 }
 
 .mat-header-row,
 .mat-footer-row,
 .mat-row {
-  height: 14px;
+  height: 24px;
+}
+
+td.mat-column-action {
+  width: 8%;
+  text-align: center;
+}
+
+.mat-icon-button {
+    padding: 0 3px;
+    min-width: 0;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    line-height: 24px;
+    border-radius: 50%;
 }
