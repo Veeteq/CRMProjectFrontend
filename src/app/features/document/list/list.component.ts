@@ -14,7 +14,7 @@ import { DocumentService } from '../service/document.service';
 })
 export class ListComponent implements OnInit, AfterViewInit {
   dcouments: DocumentSummary[] = [];
-  displayedColumns: string[] = ['num', 'documentDate', 'documentType', 'name', 'counterparty', 'account', 'paymentMethod'];
+  displayedColumns: string[] = ['num', 'documentDate', 'documentType', 'name', 'counterparty', 'account', 'paymentMethod', 'documentBalance', 'action'];
   pageSize: number = 25;
   pageSizeOptions: number[] = [25, 50];
   totalElements: number;
@@ -40,7 +40,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     )
     .subscribe();
   }
-  
+
+  delete(id: number) {
+    console.log("Delete document with id: " + id);
+  }
+
   private loadDocuments() {
     const page = this.paginator?.pageIndex ?? 0;
     const size = this.paginator?.pageSize ?? this.pageSize;
