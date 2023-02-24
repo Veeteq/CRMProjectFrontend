@@ -19,8 +19,8 @@ import { StatementService } from '../service/statement.service';
 export class ListComponent implements OnInit, AfterViewInit {
   statements: StatementSummary[] = [];
   displayedColumns: string[] = ['num', 'fileName', 'reportDate', 'account', 'itemsCount', 'totalAmount', 'action'];
-  pageSizeOptions: number[] = [20, 50];
-  pageSize: number = 20;
+  pageSizeOptions: number[] = [30, 50];
+  pageSize: number = 30;
   totalElements: number;
   dataSource: MatTableDataSource<StatementSummary> = new MatTableDataSource();
 
@@ -67,7 +67,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   private loadStatements() {
     let page = this.paginator?.pageIndex ?? 0;
-    let size = this.paginator?.pageSize ?? 20;
+    let size = this.paginator?.pageSize ?? this.pageSize;
     let column = this.sort?.active ?? "reportDate";
     let dir = this.sort?.direction ?? "desc";
     

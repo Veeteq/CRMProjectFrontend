@@ -73,7 +73,7 @@
             <mat-form-field style="width:30%" appearance="fill">
               <mat-label>Payment Method</mat-label>
               <mat-select formControlName="paymentMethod">
-                <mat-option *ngFor="let method of paymentMethods" [value]="method.name">{{method.description}}</mat-option>
+                <mat-option *ngFor="let method of paymentMethods" [value]="method.code">{{method.description}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

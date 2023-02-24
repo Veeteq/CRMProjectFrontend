@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { AlertService } from 'src/app/alert/alert.service';
 import { Account } from 'src/app/model/account';
+import { PaymentMethod } from 'src/app/model/payment-method';
 import { UserService } from 'src/app/services/user.service';
 import { AddDialogComponent } from '../../counterparty/add-dialog/add-dialog.component';
 import { Counterparty } from '../../counterparty/model/counterparty';
@@ -33,7 +34,7 @@ export class AddComponent implements OnInit {
   accounts: Observable<Account[]>;
   counterparties: Observable<Counterparty[]>;
   documentTypes: any[];
-  paymentMethods: any[];
+  paymentMethods: PaymentMethod[];
   statementDetails: StatementDetailSummary[];
   titles: string[];
   isLoading = false;
@@ -121,6 +122,10 @@ export class AddComponent implements OnInit {
     return (this.form.controls.events as FormArray).controls as FormGroup[];
   }
 
+  get paymentMethod() {
+    return this.form.controls.paymentMethod as FormControl;
+  }
+
   onSubmit(form: FormGroup): void {
     console.log("onSubmit: " + JSON.stringify(form.value));
 
@@ -143,6 +148,7 @@ export class AddComponent implements OnInit {
       id: detail.account.id,
       username: detail.account.username
     });
+    this.paymentMethod.setValue(detail.paymentMethod.code);
   }
 
   onAddCounterparty() {
@@ -192,7 +198,7 @@ export class AddComponent implements OnInit {
   }
 
   displayDetail(detail : StatementDetailSummary): string {
-    return detail ? detail.account.username + " | " + detail.operationDate + " | " + detail.title + " | " + detail.amount : '';
+    return detail ? detail.account.username + " | " + detail.title + " | " + detail.amount : '';
   }
 
   displayCounterparty(counterparty: Counterparty): string {
