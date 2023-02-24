@@ -1,17 +1,14 @@
 <div fxLayout="row" fxLayoutGap="12px" [style.margin-top]="'6px'">
-  <div fxLayout="column" style="width: 17%" fxLayoutGap="5px">
+  <div fxLayout="column" style="width: 20%; margin-right: 6px;">
     <mat-card>
-      <div class="mat-body-2">Impératif</div>
-      <div class="mat-body-1">Se rapproche des langages de type impératif, tels que le Java : utilisation de classes,
-        interfaces, héritage ...</div>
+      <div class="mat-body-2">Documents</div>
+      <div class="mat-body-1">List of documents</div>
     </mat-card>
   </div>
-  <div style="width: 80%" fxLayoutGap="10px">
+  <div fxLayout="column" style="width: 80%">
     <mat-card>
-      <div class="mat-body-2">Impératif</div>
-      <div class="mat-body-1">Se rapproche des langages de type impératif, tels que le Java : utilisation de classes,
-        interfaces, héritage ...
-      </div>
+      <div class="mat-body-2">Documents</div>
+      <div class="mat-body-1">List of documents</div>
       <table mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortActive="documentDate" matSortDirection="desc" class="mat-elevation-z8">
         <!-- Index Column -->
         <ng-container matColumnDef="num">

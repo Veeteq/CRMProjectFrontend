@@ -15,8 +15,8 @@ import { DocumentService } from '../service/document.service';
 export class ListComponent implements OnInit, AfterViewInit {
   dcouments: DocumentSummary[] = [];
   displayedColumns: string[] = ['num', 'documentDate', 'documentType', 'name', 'counterparty', 'account', 'paymentMethod', 'documentBalance', 'action'];
-  pageSize: number = 25;
-  pageSizeOptions: number[] = [25, 50];
+  pageSize: number = 30;
+  pageSizeOptions: number[] = [30, 50];
   totalElements: number;
   dataSource: MatTableDataSource<DocumentSummary> = new MatTableDataSource();
 

@@ -1,4 +1,5 @@
 import { Account } from "src/app/model/account";
+import { PaymentMethod } from "src/app/model/payment-method";
 
 export class StatementDetailSummary {
   id: number;
@@ -6,4 +7,5 @@ export class StatementDetailSummary {
   operationDate: Date;
   title: string;
   amount: number;
+  paymentMethod: PaymentMethod;
 }

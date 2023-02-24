@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,9 +20,9 @@ import { DetailsComponent } from './details/details.component';
 import { ImportComponent } from './import/import.component';
 
 const routes: Routes = [
-  { path: '',       pathMatch: 'full', redirectTo: 'list' },
-  { path: 'list',   component: ListComponent },
-  { path: 'import', component: ImportComponent },
+  { path: '',           pathMatch: 'full', redirectTo: 'list' },
+  { path: 'list',       component: ListComponent },
+  { path: 'import',     component: ImportComponent },
   { path: 'import/:id', component: ImportComponent }
 ];
 
@@ -37,6 +38,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
     MatDatepickerModule,
     MatIconModule,
     MatInputModule,
